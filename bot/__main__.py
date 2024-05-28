@@ -7,6 +7,9 @@ from model import Model
 
 dotenv.load_dotenv()
 
+def on_ready():
+    print("ready")
+    return
 
 if __name__ == "__main__":
 
@@ -17,6 +20,6 @@ if __name__ == "__main__":
     )
     app = Model()
     client = crescent.Client(bot, app)
-    bot.add_startup_callback(app.on_ready)
+    bot.add_startup_callback(on_ready)
 
-    bot.run()   
+    bot.run()
