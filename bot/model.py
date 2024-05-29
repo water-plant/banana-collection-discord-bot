@@ -1,6 +1,8 @@
+import dataclasses
+@dataclasses.dataclass
 class Model:
-    def __init__(self):
-        pass
+    guild_id: int
+    users: dict[int,int]
 
     def on_ready(self):
         print("ready")
