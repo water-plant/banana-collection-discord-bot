@@ -11,7 +11,7 @@ def on_ready():
     print("ready")
     return
 
-if __name__ == "__main__":
+def main() -> int:
 
     bot = hikari.RESTBot(
         token= os.environ["TOKEN"],
@@ -23,3 +23,9 @@ if __name__ == "__main__":
     bot.add_startup_callback(on_ready)
 
     bot.run()
+
+
+    return 0 
+
+if __name__ == "__main__":
+    main()
