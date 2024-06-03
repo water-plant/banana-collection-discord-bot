@@ -20,16 +20,24 @@ async def plugin_test(ctx: crescent.Context) -> None:
  
 @plugin.include
 @crescent.command
-async def claim(ctx: crescent.Context) -> None:
-    amount += data[ctx.user.id]
-    data[ctx.user.id] = amount
-    await ctx.respond(f"You now have {amount}")
+async def instructions(ctx: crescent.Context) -> None:
+    """
+    This may be changed as I turn this into a web application. This could also be a separate from the web game. 
+    bananas are just a measure of server activity.
+    \nThere will be a dashboard to display them
+    """
+
+    await ctx.respond(embed=
+                      hikari.Embed(title="instructions",
+                                   description="instructions to using this bot")
+                                   .set_footer("github link here")
+                                   .add_field("`/claim` for daily claims\nyou will be able to passively gain bananas for a message sent every 5 minutes."))
     return
 
 @plugin.include
 @crescent.command
 async def claim(ctx: crescent.Context) -> None:
     amount += data[ctx.user.id]
-    data[ctx.user.id] = amount
+    data[ctx.user.id] = amount #some arbitrary database called data, will be changed later.
     await ctx.respond(f"You now have {amount}")
     return
