@@ -1,5 +1,7 @@
 # objectives for this bot:
 
+banana collector 
+
 lib: 
 hikari
 
