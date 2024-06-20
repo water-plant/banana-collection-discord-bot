@@ -46,7 +46,7 @@ async def instructions(ctx: crescent.Context) -> None:
 @plugin.include
 @crescent.command
 async def claim(ctx: crescent.Context) -> None:
-    amount = plugin.model.calculate_bananas(ctx.user.id)
+    amount = plugin.model.calculate_bananas(ctx.user.id, ctx.guild.id)
     await ctx.respond(f"You now have {amount} bananas")
     return
 
@@ -58,17 +58,17 @@ class Profile():
 
 
     def valid_Option(self, uid) -> hikari.snowflakes.Snowflake:
-        return self.mention.id if not self.mention else uid
+        return self.mention.id if self.mention else uid
 
-    async def create_embed(self, ctx: crescent.Context):
-        embed_created: hikari.Embed = (hikari.Embed(title="Profile",
-                            description=f"You have {plugin.model.users[self.valid_Option(ctx.user.id)]}")
-                                   .set_footer("github link here")
-                                   .add_field(name= "body", value="`/claim` for daily claims\nyou will be able to passively gain bananas for a message sent every 5 minutes."),
-        )
+    async def callback(self, ctx: crescent.Context):
+        embed_created: hikari.Embed = hikari.Embed(title="Profile", description=f"You have {plugin.model.users[self.valid_Option(ctx.user.id)]}").set_footer("github link here")
         await ctx.respond(embed = embed_created)        
         return
     
 
 @plugin.include
 @tasks.loop(minutes=5)
+async def loop():
+    for guild_key in plugin.model.users_chatted.keys:
+        for user_key in plugin.model.users_chatted[guild_key].keys:
+            plugin.model.users[guild_key][user_key] 

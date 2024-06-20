@@ -14,7 +14,7 @@ def main() -> int:
     bot = hikari.GatewayBot(
         token= os.environ["TOKEN"],
     )
-    client = crescent.Client(bot, model.Model({}))
+    client = crescent.Client(bot, model.Model({}, {}))
     client.plugins.load("mods.bananas")
 
     bot.run()
