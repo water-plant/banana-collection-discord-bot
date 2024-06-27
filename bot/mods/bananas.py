@@ -64,11 +64,22 @@ class Profile():
         embed_created: hikari.Embed = hikari.Embed(title="Profile", description=f"You have {plugin.model.users[self.valid_Option(ctx.user.id)]}").set_footer("github link here")
         await ctx.respond(embed = embed_created)        
         return
+
+
+@plugin.include
+@crescent.event
+async def on_message(e: hikari.MessageCreateEvent) -> None:
+    if(e.message.author.is_bot):
+        return
+    plugin.model.add_to_set(e.message.author.id,e.message.guild_id)
+    return
     
 
 @plugin.include
-@tasks.loop(minutes=5)
+@tasks.loop(seconds=30)
 async def loop():
-    for guild_key in plugin.model.users_chatted.keys:
-        for user_key in plugin.model.users_chatted[guild_key].keys:
-            plugin.model.users[guild_key][user_key] 
+    for guild_key in plugin.model.guild_users_chatted_map.keys():
+        for user_key in plugin.model.guild_users_chatted_map[guild_key]:
+            
+            plugin.model.users[user_key][guild_key] += 5
+    print("looped")
