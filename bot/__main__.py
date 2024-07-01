@@ -3,29 +3,30 @@ import os
 import hikari
 import crescent
 import dotenv
-from model import Model
+import model
 
 dotenv.load_dotenv()
+class Main:
+    def __init__(self, bot: hikari.GatewayBot):
 
-def on_ready():
-    print("ready")
-    return
+        self.bot = bot
+        self.client: crescent.Client = crescent.Client(bot, model.Model({}, {}))
 
-def main() -> int:
-
-    bot = hikari.RESTBot(
-        token= os.environ["TOKEN"],
-        token_type= "Bot",
-        public_key=os.environ["PUBLIC_KEY"],
-    )
-    app = Model()
-    client = crescent.Client(bot, app)
-    bot.add_startup_callback(on_ready)
-
-    bot.run()
+        hikari.GatewayBot(
+            token= os.environ["TOKEN"],
+        )
+        client = crescent.Client(bot, model.Model({}, {}))
+        client.plugins.load("mods.bananas")
 
 
-    return 0 
+    def main(self) -> int:
+
+        self.bot.run()
+
+        return 0
 
 if __name__ == "__main__":
-    main()
+    bot = hikari.GatewayBot(
+            token= os.environ["TOKEN"],
+        )
+    Main(bot).main()

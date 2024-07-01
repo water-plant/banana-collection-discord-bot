@@ -1,6 +1,6 @@
 #TODO: MONGODB Atlas integration 
 
-class database:
+class Database:
     def __init__(self):
         pass
     
